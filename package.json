@@ -1,7 +1,7 @@
 {
-	"name": "clickup.js",
-	"version": "3.0.1",
-	"description": "A Node.js wrapper for the Clickup API",
+	"name": "clickup.ts",
+	"version": "3.1.0",
+	"description": "A Node.js typescript wrapper for the Clickup API",
 	"main": "dist/index.js",
 	"keywords": [
 		"clickup",
@@ -9,6 +9,7 @@
 		"clickup-js",
 		"clickup.js",
 		"api",
+		"typescript",
 		"wrapper",
 		"wrapper-api"
 	],
