@@ -1,20 +1,13 @@
-class Webhooks {
+import { Request } from '../structures/Request';
+import { BaseRoute } from './BaseRoute';
+
+export class Webhooks extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'webhook';
+	constructor(request: Request) {
+		super(request, 'webhook');
 	}
 
 	/**
@@ -23,7 +16,7 @@ class Webhooks {
 	 * @param {String} webhookId The webhook id
 	 * @param {Object} data The webhook data
 	 */
-	async update(webhookId, data) {
+	async update(webhookId: string, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${webhookId}`,
 			data,
@@ -35,11 +28,9 @@ class Webhooks {
 	 *
 	 * @param {String} webhookId The webhook id
 	 */
-	async delete(webhookId) {
+	async delete(webhookId: string) {
 		return this._request.delete({
 			endpoint: `${this.route}/${webhookId}`,
 		});
 	}
 }
-
-module.exports = Webhooks;

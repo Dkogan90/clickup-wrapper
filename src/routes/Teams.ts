@@ -1,20 +1,14 @@
-class Teams {
+import { Request } from '../structures/Request';
+import { RequestParams } from '../utils/buildSearchParams';
+import { BaseRoute } from './BaseRoute';
+
+export class Teams extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'team';
+	constructor(request: Request) {
+		super(request, 'team');
 	}
 
 	/**
@@ -32,7 +26,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data Goal data
 	 */
-	async createGoal(teamId, data) {
+	async createGoal(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/goal`,
 			data,
@@ -44,7 +38,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId The team id
 	 */
-	async getGoals(teamId) {
+	async getGoals(teamId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/goal`,
 		});
@@ -56,7 +50,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The guest data
 	 */
-	async inviteGuest(teamId, data) {
+	async inviteGuest(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/guest`,
 			data,
@@ -69,7 +63,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Number} guestId The guest id
 	 */
-	async getGuest(teamId, guestId) {
+	async getGuest(teamId: number, guestId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/guest/${guestId}`,
 		});
@@ -81,7 +75,7 @@ class Teams {
 	 * @param {Number} guestId The guest id
 	 * @param {Object} data The guest data
 	 */
-	async editGuest(teamId, guestId, data) {
+	async editGuest(teamId: number, guestId: number, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${teamId}/guest/${guestId}`,
 			data,
@@ -94,7 +88,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Number} guestId The guest id
 	 */
-	async removeGuest(teamId, guestId) {
+	async removeGuest(teamId: number, guestId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${teamId}/guest/${guestId}`,
 		});
@@ -105,7 +99,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId
 	 */
-	async sharedHierarchy(teamId) {
+	async sharedHierarchy(teamId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/shared`,
 		});
@@ -117,7 +111,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The space data
 	 */
-	async createSpace(teamId, data) {
+	async createSpace(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/space`,
 			data,
@@ -130,11 +124,11 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Boolean} [archived=false] If archived spaces should be returned or not
 	 */
-	async getSpaces(teamId, archived = false) {
+	async getSpaces(teamId: number, archived: boolean = false) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/space`,
 			params: {
-				archived,
+				archived: new Boolean(archived).toString(),
 			},
 		});
 	}
@@ -145,9 +139,9 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async getFilteredTasks(teamId, options = {}) {
+	async getFilteredTasks(teamId: number, options?: RequestParams) {
 		// eslint-disable-next-line no-param-reassign
-		options.page = options.page || 0;
+
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/task`,
 			params: options,
@@ -160,11 +154,11 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Integer} [page=0] The page to get
 	 */
-	async getTaskTemplates(teamId, page = 0) {
+	async getTaskTemplates(teamId: number, page = 0) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/taskTemplate`,
 			params: {
-				page,
+				page: page.toString(),
 			},
 		});
 	}
@@ -175,7 +169,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Number} userId The user id
 	 */
-	async getUser(teamId, userId) {
+	async getUser(teamId: number, userId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/user/${userId}`,
 		});
@@ -187,7 +181,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The user data
 	 */
-	async inviteUser(teamId, data) {
+	async inviteUser(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/user`,
 			data,
@@ -201,7 +195,7 @@ class Teams {
 	 * @param {Number} userId The user id
 	 * @param {Object} data The user data
 	 */
-	async editUser(teamId, userId, data) {
+	async editUser(teamId: number, userId: number, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${teamId}/user/${userId}`,
 			data,
@@ -214,7 +208,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Number} userId The team id
 	 */
-	async removeUser(teamId, userId) {
+	async removeUser(teamId: number, userId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${teamId}/user/${userId}`,
 		});
@@ -226,7 +220,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The view data
 	 */
-	async createView(teamId, data) {
+	async createView(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/view`,
 			data,
@@ -238,7 +232,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId The team id
 	 */
-	async getViews(teamId) {
+	async getViews(teamId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/view`,
 		});
@@ -250,7 +244,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The webhook data
 	 */
-	async createWebhook(teamId, data) {
+	async createWebhook(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/webhook`,
 			data,
@@ -262,7 +256,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId the team id
 	 */
-	async getWebhooks(teamId) {
+	async getWebhooks(teamId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/webhook`,
 		});
@@ -274,7 +268,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async getTimeEntries(teamId, options) {
+	async getTimeEntries(teamId: number, options?: RequestParams) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/time_entries`,
 			params: options,
@@ -288,7 +282,7 @@ class Teams {
 	 * @param {String} timerId The timer id
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async getSingleTimeEntry(teamId, timerId, options) {
+	async getSingleTimeEntry(teamId: number, timerId: number, options?: RequestParams) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/time_entries/${timerId}`,
 			params: options,
@@ -301,7 +295,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async getRunningTimeEntry(teamId, options) {
+	async getRunningTimeEntry(teamId: number, options?: RequestParams) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/time_entries/current`,
 			params: options,
@@ -315,7 +309,7 @@ class Teams {
 	 * @param {Object} data The time entry data
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async createTimeEntry(teamId, data, options) {
+	async createTimeEntry(teamId: number, data: object, options?: RequestParams) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/time_entries`,
 			params: options,
@@ -329,7 +323,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The time entries data
 	 */
-	async removeTagsFromTimeEntries(teamId, data) {
+	async removeTagsFromTimeEntries(teamId: number, data: object) {
 		return this._request.delete({
 			endpoint: `${this.route}/${teamId}/time_entries/tags`,
 			data,
@@ -341,7 +335,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId The team id
 	 */
-	async getAllTagsFromTimeEntries(teamId) {
+	async getAllTagsFromTimeEntries(teamId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${teamId}/time_entries/tags`,
 		});
@@ -353,7 +347,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The time entries and tag data
 	 */
-	async addTagsFromTimeEntries(teamId, data) {
+	async addTagsFromTimeEntries(teamId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/time_entries/tags`,
 			data,
@@ -366,7 +360,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Object} data The tag data
 	 */
-	async changeTagsFromTimeEntries(teamId, data) {
+	async changeTagsFromTimeEntries(teamId: number, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${teamId}/time_entries/tags`,
 			data,
@@ -381,7 +375,7 @@ class Teams {
 	 * @param {Object} data The time entry data
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async startTimeEntry(teamId, timerId, data, options) {
+	async startTimeEntry(teamId: number, timerId: number, data: object, options: RequestParams) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/time_entries/start/${timerId}`,
 			params: options,
@@ -394,7 +388,7 @@ class Teams {
 	 *
 	 * @param {Number} teamId The team id
 	 */
-	async stopTimeEntry(teamId) {
+	async stopTimeEntry(teamId: number) {
 		return this._request.post({
 			endpoint: `${this.route}/${teamId}/time_entries/stop`,
 		});
@@ -406,7 +400,7 @@ class Teams {
 	 * @param {Number} teamId The team id
 	 * @param {Number} timerId The timer id
 	 */
-	async deleteTimeEntry(teamId, timerId) {
+	async deleteTimeEntry(teamId: number, timerId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${teamId}/time_entries/${timerId}`,
 		});
@@ -420,7 +414,7 @@ class Teams {
 	 * @param {Object} data The time entry data
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async updateTimeEntry(teamId, timerId, data, options) {
+	async updateTimeEntry(teamId: number, timerId: number, data: object, options?: RequestParams) {
 		return this._request.put({
 			endpoint: `${this.route}/${teamId}/time_entries/${timerId}`,
 			params: options,
@@ -428,4 +422,3 @@ class Teams {
 		});
 	}
 }
-module.exports = Teams;

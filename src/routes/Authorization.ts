@@ -1,15 +1,13 @@
-class Authorization {
+import { Request } from '../structures/Request';
+import { BaseRoute } from './BaseRoute';
+
+export class Authorization extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
+	constructor(request: Request) {
+		super(request, '');
 	}
 
 	/**
@@ -19,7 +17,7 @@ class Authorization {
 	 * @param {String} clientSecret Oauth app client secret
 	 * @param {String} code Code given in redirect url
 	 */
-	async accessToken(clientId, clientSecret, code) {
+	async accessToken(clientId: string, clientSecret: string, code: string) {
 		return this._request.post({
 			endpoint: 'oauth/token',
 			params: {
@@ -48,5 +46,3 @@ class Authorization {
 		});
 	}
 }
-
-module.exports = Authorization;

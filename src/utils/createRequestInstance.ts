@@ -1,5 +1,5 @@
-const got = require('got');
-const { merge } = require('./merge');
+import got from 'got/dist/source';
+import { deepMerge } from './deepMerge';
 
 /**
  * Creates a got instance with clickup default config
@@ -7,7 +7,7 @@ const { merge } = require('./merge');
  * @param {got.ExtendOptions} requestOptions Options for the created got instance. All options can be found [here](https://github.com/sindresorhus/got#options)
  * @returns {got.Got} A got instance
  */
-const createRequestInstance = (token, requestOptions = {}) => {
+export const createRequestInstance = (token: string, requestOptions = {}) => {
 	const requestDefaultOptions = {
 		headers: {
 			Authorization: token,
@@ -17,10 +17,6 @@ const createRequestInstance = (token, requestOptions = {}) => {
 		prefixUrl: 'https://api.clickup.com/api/v2',
 	};
 	// apply defaults where necessary
-	const requestConfig = merge(requestOptions, requestDefaultOptions);
+	const requestConfig = deepMerge(requestOptions, requestDefaultOptions);
 	return got.extend(requestConfig);
-};
-
-module.exports = {
-	createRequestInstance,
 };

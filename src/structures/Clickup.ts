@@ -1,4 +1,5 @@
-const {
+import type { ExtendOptions } from 'got/dist/source';
+import {
 	Authorization,
 	Checklists,
 	Comments,
@@ -11,10 +12,24 @@ const {
 	Teams,
 	Views,
 	Webhooks,
-} = require('../routes');
-const { Request } = require('./Request');
+} from '../routes';
+import { Request } from './Request';
 
-class Clickup {
+export class Clickup {
+	readonly _service: Request;
+	readonly authorization: Authorization;
+	readonly checklists: Checklists;
+	readonly comments: Comments;
+	readonly folders: Folders;
+	readonly goals: Goals;
+	readonly keyResults: KeyResults;
+	readonly lists: Lists;
+	readonly spaces: Spaces;
+	readonly tasks: Tasks;
+	readonly teams: Teams;
+	readonly views: Views;
+	readonly webhooks: Webhooks;
+
 	/**
 	 *  Creates a client instance that connects to the Clickup API
 	 *
@@ -22,7 +37,7 @@ class Clickup {
 	 * @param {String} token Clickup API Access Token
 	 * @param {import('got/dist/source').ExtendOptions} requestOptions Options for the created got instance.
 	 */
-	constructor(token, requestOptions) {
+	constructor(token: string, requestOptions?: ExtendOptions) {
 		// create service instance
 		/**
 		 * The clickup request service
@@ -118,7 +133,3 @@ class Clickup {
 		this.webhooks = new Webhooks(this._service);
 	}
 }
-
-module.exports = {
-	Clickup,
-};

@@ -1,20 +1,14 @@
-class Lists {
+import { Request } from '../structures/Request';
+import { RequestParams } from '../utils/buildSearchParams';
+import { BaseRoute } from './BaseRoute';
+
+export class Lists extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'list';
+	constructor(request: Request) {
+		super(request, 'list');
 	}
 
 	/**
@@ -22,7 +16,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async get(listId) {
+	async get(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}`,
 		});
@@ -34,7 +28,7 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Object} data The list data
 	 */
-	async update(listId, data) {
+	async update(listId: number, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${listId}`,
 			data,
@@ -46,7 +40,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async delete(listId) {
+	async delete(listId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${listId}`,
 		});
@@ -58,7 +52,7 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Object} data The comment data
 	 */
-	async addComment(listId, data) {
+	async addComment(listId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/comment`,
 			data,
@@ -70,7 +64,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async getComments(listId) {
+	async getComments(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/comment`,
 		});
@@ -81,7 +75,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async getAccessibleCustomFields(listId) {
+	async getAccessibleCustomFields(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/field`,
 		});
@@ -94,7 +88,7 @@ class Lists {
 	 * @param {Number} guestId The guest id
 	 * @param {Object} data The guest data
 	 */
-	async addGuest(listId, guestId, data) {
+	async addGuest(listId: number, guestId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/guest/${guestId}`,
 			data,
@@ -107,7 +101,7 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Number} guestId The guest id
 	 */
-	async removeGuest(listId, guestId) {
+	async removeGuest(listId: number, guestId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${listId}/guest/${guestId}`,
 		});
@@ -118,7 +112,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async getMembers(listId) {
+	async getMembers(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/member`,
 		});
@@ -130,7 +124,7 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Object} data The task data
 	 */
-	async createTask(listId, data) {
+	async createTask(listId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/task`,
 			data,
@@ -143,9 +137,9 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Object} [options] The parameter options to pass in
 	 */
-	async getTasks(listId, options = {}) {
+	async getTasks(listId: number, options: RequestParams = {}) {
 		// eslint-disable-next-line no-param-reassign
-		options.archived = options.archived || false;
+		options.archived = options.archived || 'false';
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/task`,
 			params: options,
@@ -159,7 +153,7 @@ class Lists {
 	 * @param {String} templateId The template id
 	 * @param {Object} data The task data
 	 */
-	async createTaskFromTemplate(listId, templateId, data) {
+	async createTaskFromTemplate(listId: number, templateId: string, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/taskTemplate/${templateId}`,
 			data,
@@ -172,7 +166,7 @@ class Lists {
 	 * @param {Number} listId The list id
 	 * @param {Object} data The view data
 	 */
-	async createView(listId, data) {
+	async createView(listId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/view`,
 			data,
@@ -184,7 +178,7 @@ class Lists {
 	 *
 	 * @param {Number} listId The list id
 	 */
-	async getViews(listId) {
+	async getViews(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/view`,
 		});
@@ -193,10 +187,10 @@ class Lists {
 	/**
 	 * Add task to a list
 	 *
-	 * @param {String} listId The list id
+	 * @param {Number} listId The list id
 	 * @param {String} taskId The task id
 	 */
-	async addTaskToList(listId, taskId) {
+	async addTaskToList(listId: number, taskId: string) {
 		return this._request.post({
 			endpoint: `${this.route}/${listId}/task/${taskId}`,
 		});
@@ -205,10 +199,10 @@ class Lists {
 	/**
 	 * Remove a task from a list
 	 *
-	 * @param {Sting} listId The list id
+	 * @param {Number} listId The list id
 	 * @param {String} taskId The task id
 	 */
-	async removeTaskFromList(listId, taskId) {
+	async removeTaskFromList(listId: number, taskId: string) {
 		return this._request.delete({
 			endpoint: `${this.route}/${listId}/task/${taskId}`,
 		});
@@ -217,13 +211,11 @@ class Lists {
 	/**
 	 * Get list members
 	 *
-	 * @param {String} listId The list id
+	 * @param {Number} listId The list id
 	 */
-	async getListMembers(listId) {
+	async getListMembers(listId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${listId}/member`,
 		});
 	}
 }
-
-module.exports = Lists;

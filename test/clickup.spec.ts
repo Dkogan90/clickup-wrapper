@@ -1,11 +1,24 @@
-const { assert } = require('chai');
-const { Clickup } = require('../src/index');
-const routes = require('../src/routes');
+import { assert } from 'chai';
+import { Clickup } from '../src';
+import {
+	Authorization,
+	Checklists,
+	Comments,
+	Folders,
+	Goals,
+	KeyResults,
+	Lists,
+	Spaces,
+	Tasks,
+	Teams,
+	Views,
+	Webhooks,
+} from '../src/routes';
 
 const token = 'token';
 
 describe('Testing Clickup Client Instance', () => {
-	let clickup;
+	let clickup: Clickup;
 	before(() => {
 		clickup = new Clickup(token);
 	});
@@ -33,23 +46,23 @@ describe('Testing Clickup Client Instance', () => {
 	});
 
 	it('should instantiate all routes', () => {
-		assert.instanceOf(clickup.authorization, routes.Authorization);
-		assert.instanceOf(clickup.checklists, routes.Checklists);
-		assert.instanceOf(clickup.comments, routes.Comments);
-		assert.instanceOf(clickup.folders, routes.Folders);
-		assert.instanceOf(clickup.goals, routes.Goals);
-		assert.instanceOf(clickup.keyResults, routes.KeyResults);
-		assert.instanceOf(clickup.lists, routes.Lists);
-		assert.instanceOf(clickup.spaces, routes.Spaces);
-		assert.instanceOf(clickup.tasks, routes.Tasks);
-		assert.instanceOf(clickup.teams, routes.Teams);
-		assert.instanceOf(clickup.views, routes.Views);
-		assert.instanceOf(clickup.webhooks, routes.Webhooks);
+		assert.instanceOf(clickup.authorization, Authorization);
+		assert.instanceOf(clickup.checklists, Checklists);
+		assert.instanceOf(clickup.comments, Comments);
+		assert.instanceOf(clickup.folders, Folders);
+		assert.instanceOf(clickup.goals, Goals);
+		assert.instanceOf(clickup.keyResults, KeyResults);
+		assert.instanceOf(clickup.lists, Lists);
+		assert.instanceOf(clickup.spaces, Spaces);
+		assert.instanceOf(clickup.tasks, Tasks);
+		assert.instanceOf(clickup.teams, Teams);
+		assert.instanceOf(clickup.views, Views);
+		assert.instanceOf(clickup.webhooks, Webhooks);
 	});
 });
 
 describe('Testing Client Got Options', () => {
-	let clickup;
+	let clickup: Clickup;
 	before(() => {
 		clickup = new Clickup(token, {
 			hooks: {

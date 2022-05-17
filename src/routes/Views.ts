@@ -1,20 +1,13 @@
-class Views {
+import { Request } from "../structures/Request";
+import { BaseRoute } from "./BaseRoute";
+
+export class Views extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'view';
+	constructor(request : Request) {
+		super(request, 'view');
 	}
 
 	/**
@@ -22,7 +15,7 @@ class Views {
 	 *
 	 * @param {String} viewId The view id
 	 */
-	async get(viewId) {
+	async get(viewId : string) {
 		return this._request.get({
 			endpoint: `${this.route}/${viewId}`,
 		});
@@ -34,7 +27,7 @@ class Views {
 	 * @param {String} viewId The view id
 	 * @param {Object} data The view data
 	 */
-	async update(viewId, data) {
+	async update(viewId : string, data : object) {
 		return this._request.put({
 			endpoint: `${this.route}/${viewId}`,
 			data,
@@ -46,7 +39,7 @@ class Views {
 	 *
 	 * @param {String} viewId The view id
 	 */
-	async delete(viewId) {
+	async delete(viewId : string) {
 		return this._request.delete({
 			endpoint: `${this.route}/${viewId}`,
 		});
@@ -58,7 +51,7 @@ class Views {
 	 * @param {String} viewId The view id
 	 * @param {Object} data The comment data
 	 */
-	async addComment(viewId, data) {
+	async addComment(viewId : string, data : object) {
 		return this._request.post({
 			endpoint: `${this.route}/${viewId}/comment`,
 			data,
@@ -70,7 +63,7 @@ class Views {
 	 *
 	 * @param {String} viewId The view id
 	 */
-	async getComments(viewId) {
+	async getComments(viewId : string) {
 		return this._request.get({
 			endpoint: `${this.route}/${viewId}/comment`,
 		});
@@ -82,14 +75,14 @@ class Views {
 	 * @param {String} viewId The view id
 	 * @param {Integer} [page=0] The page to get
 	 */
-	async getTasks(viewId, page = 0) {
+	async getTasks(viewId : string, page = 0) {
 		return this._request.get({
 			endpoint: `${this.route}/${viewId}/task`,
 			params: {
-				page,
+				page
 			},
 		});
 	}
 }
 
-module.exports = Views;
+

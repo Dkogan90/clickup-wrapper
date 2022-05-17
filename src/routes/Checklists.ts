@@ -1,20 +1,14 @@
-class Checklists {
+import { Request } from '../structures/Request';
+import { BaseRoute } from './BaseRoute';
+
+export class Checklists extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'checklist';
+
+	constructor(request: Request) {
+		super(request, 'checklist');
 	}
 
 	/**
@@ -23,7 +17,7 @@ class Checklists {
 	 * @param {String} checklistId The checklist id
 	 * @param {Object} data The checklist data
 	 */
-	async update(checklistId, data) {
+	async update(checklistId: string, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${checklistId}`,
 			data,
@@ -35,7 +29,7 @@ class Checklists {
 	 *
 	 * @param {String} checklistId The checklist id
 	 */
-	async delete(checklistId) {
+	async delete(checklistId: string) {
 		return this._request.delete({
 			endpoint: `${this.route}/${checklistId}`,
 		});
@@ -47,7 +41,7 @@ class Checklists {
 	 * @param {String} checklistId The checklist id
 	 * @param {Object} data The checklist item data
 	 */
-	async createChecklistItem(checklistId, data) {
+	async createChecklistItem(checklistId: string, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${checklistId}/checklist_item`,
 			data,
@@ -61,7 +55,7 @@ class Checklists {
 	 * @param {String} checklistItemId The checklist item id
 	 * @param {Object} data The checklist item data
 	 */
-	async updateChecklistItem(checklistId, checklistItemId, data) {
+	async updateChecklistItem(checklistId: string, checklistItemId: string, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${checklistId}/checklist_item/${checklistItemId}`,
 			data,
@@ -74,11 +68,9 @@ class Checklists {
 	 * @param {String} checklistId The checklist id
 	 * @param {String} checklistItemId The checklist item id
 	 */
-	async deleteChecklistItem(checklistId, checklistItemId) {
+	async deleteChecklistItem(checklistId: string, checklistItemId: string) {
 		return this._request.delete({
 			endpoint: `${this.route}/${checklistId}/checklist_item/${checklistItemId}`,
 		});
 	}
 }
-
-module.exports = Checklists;

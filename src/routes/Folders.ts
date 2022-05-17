@@ -1,20 +1,13 @@
-class Folders {
+import { Request } from '../structures/Request';
+import { BaseRoute } from './BaseRoute';
+
+export class Folders extends BaseRoute {
 	/**
 	 * @constructor
 	 * @param {Request} request A request instance
 	 */
-	constructor(request) {
-		/**
-		 * A request instance
-		 * @type {Request}
-		 * @private
-		 */
-		this._request = request;
-		/**
-		 * The main route for the collection
-		 * @type {String}
-		 */
-		this.route = 'folder';
+	constructor(request: Request) {
+		super(request, 'folder');
 	}
 
 	/**
@@ -22,7 +15,7 @@ class Folders {
 	 *
 	 * @param {Number} folderId The folder id
 	 */
-	async get(folderId) {
+	async get(folderId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${folderId}`,
 		});
@@ -34,7 +27,7 @@ class Folders {
 	 * @param {Number} folderId The folder id
 	 * @param {Object} data The folder data
 	 */
-	async update(folderId, data) {
+	async update(folderId: number, data: object) {
 		return this._request.put({
 			endpoint: `${this.route}/${folderId}`,
 			data,
@@ -46,7 +39,7 @@ class Folders {
 	 *
 	 * @param {Number} folderId The folder id
 	 */
-	async delete(folderId) {
+	async delete(folderId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${folderId}`,
 		});
@@ -59,7 +52,7 @@ class Folders {
 	 * @param {Number} guestId The guest id
 	 * @param {Object} data The guest data
 	 */
-	async addGuest(folderId, guestId, data) {
+	async addGuest(folderId: number, guestId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${folderId}/guest/${guestId}`,
 			data,
@@ -72,7 +65,7 @@ class Folders {
 	 * @param {Number} folderId The folder id
 	 * @param {Number} guestId The guest id
 	 */
-	async removeGuest(folderId, guestId) {
+	async removeGuest(folderId: number, guestId: number) {
 		return this._request.delete({
 			endpoint: `${this.route}/${folderId}/guest/${guestId}`,
 		});
@@ -84,7 +77,7 @@ class Folders {
 	 * @param {Number} folderId The folder id
 	 * @param {Object} data The list data
 	 */
-	async createList(folderId, data) {
+	async createList(folderId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${folderId}/list`,
 			data,
@@ -97,11 +90,11 @@ class Folders {
 	 * @param {Number} folderId The folder id
 	 * @param {Boolean} [archived=false] If archived lists should be returned or not
 	 */
-	async getLists(folderId, archived = false) {
+	async getLists(folderId: number, archived = false) {
 		return this._request.get({
 			endpoint: `${this.route}/${folderId}/list`,
 			params: {
-				archived,
+				archived: new Boolean(archived).toString(),
 			},
 		});
 	}
@@ -112,7 +105,7 @@ class Folders {
 	 * @param {Number} folderId The folder id
 	 * @param {Object} data The view data
 	 */
-	async createView(folderId, data) {
+	async createView(folderId: number, data: object) {
 		return this._request.post({
 			endpoint: `${this.route}/${folderId}/view`,
 			data,
@@ -124,11 +117,11 @@ class Folders {
 	 *
 	 * @param {Number} folderId The folder id
 	 */
-	async getViews(folderId) {
+	async getViews(folderId: number) {
 		return this._request.get({
 			endpoint: `${this.route}/${folderId}/view`,
 		});
 	}
 }
 
-module.exports = Folders;
+

@@ -1,14 +1,18 @@
-const { createRequestInstance } = require('../utils/createRequestInstance');
-const { buildSearchParams } = require('../utils/buildSearchParams');
+import type { ExtendOptions, Got, Method } from 'got/dist/source';
+import { buildSearchParams, RequestParams } from '../utils/buildSearchParams';
+import { createRequestInstance } from '../utils/createRequestInstance';
 
-class Request {
+export type RequestHeaders = Record<string, string>;
+export class Request {
 	/**
 	 *  Creates a client instance that connects to the Clickup API
 	 *
 	 * @constructor
 	 * @param {import('got/dist/source').ExtendOptions} requestOptions Options for the created request instance.
 	 */
-	constructor(token, requestOptions) {
+	private readonly _token: string;
+	readonly _instance: Got;
+	constructor(token: string, requestOptions?: ExtendOptions) {
 		/**
 		 * The access token
 		 */
@@ -28,8 +32,8 @@ class Request {
 	 * @param {String} options.endpoint The endpoint to make a request to
 	 * @param {Object} options.params The parameters to add to the endpoint
 	 */
-	async get({ endpoint, params }) {
-		return this._request({ endpoint, method: 'GET', params });
+	async get({ endpoint, params }: { endpoint: string; params?: RequestParams }) {
+		return this._request({ endpoint, method: 'GET', params, headers: {} });
 	}
 
 	/**
@@ -41,7 +45,17 @@ class Request {
 	 * @param {Object} options.data The data to send in the body of the request
 	 * @param {Object} options.headers The headers to send along with the request
 	 */
-	async post({ endpoint, params, data, headers }) {
+	async post({
+		endpoint,
+		params,
+		data,
+		headers,
+	}: {
+		endpoint: string;
+		params?: RequestParams;
+		data?: Object;
+		headers?: RequestHeaders;
+	}) {
 		return this._request({ endpoint, method: 'POST', params, data, headers });
 	}
 
@@ -53,7 +67,7 @@ class Request {
 	 * @param {Object} options.params The query parameters to add to the request
 	 * @param {Object} options.data The data to send in the body of the request
 	 */
-	async put({ endpoint, params, data }) {
+	async put({ endpoint, params, data }: { endpoint: string; params?: RequestParams; data?: object }) {
 		return this._request({ endpoint, method: 'PUT', params, data });
 	}
 
@@ -64,8 +78,8 @@ class Request {
 	 * @param {String} options.endpoint The endpoint to make a request to
 	 * @param {Object} options.params The query parameters to add to the request
 	 */
-	async delete({ endpoint, params }) {
-		return this._request({ endpoint, method: 'DELETE', params });
+	async delete(requestOptions: { endpoint: string; params?: RequestParams; data?: object }) {
+		return this._request({ ...requestOptions, method: 'DELETE' });
 	}
 
 	/**
@@ -78,9 +92,29 @@ class Request {
 	 * @param {Object} options.data The data to send in the body of the request
 	 * @param {Object} options.headers The headers to send along with the request
 	 */
-	async _request({ endpoint, method = 'GET', params, data = {}, headers }) {
-		const options = {
+	private async _request({
+		endpoint,
+		method = 'GET',
+		params,
+		data = {},
+		headers = {},
+	}: {
+		endpoint: string;
+		method?: Method;
+		params?: RequestParams;
+		data?: object;
+		headers?: RequestHeaders;
+	}) {
+		const options: {
+			method: Method;
+			searchParams?: URLSearchParams;
+			contentType?: string;
+			headers: RequestHeaders;
+			body?: any;
+			json?: any;
+		} = {
 			method,
+			headers,
 		};
 
 		if (params) {
@@ -89,11 +123,8 @@ class Request {
 
 		let contentType = this.getHeader('content-type');
 
-		if (headers) {
-			options.headers = headers;
-			if (headers['content-type']) {
-				contentType = headers['content-type'];
-			}
+		if (headers['content-type']) {
+			contentType = headers['content-type'];
 		}
 
 		if (method !== 'GET') {
@@ -116,7 +147,7 @@ class Request {
 	/**
 	 * Helper to obtain a specific header
 	 */
-	getHeader(name) {
+	getHeader(name: string) {
 		const options = this.getOptions();
 		return options.headers[name];
 	}
@@ -135,5 +166,3 @@ class Request {
 		return this._instance.defaults.options;
 	}
 }
-
-module.exports = { Request };

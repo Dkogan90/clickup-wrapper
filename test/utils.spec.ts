@@ -1,7 +1,7 @@
-const { assert } = require('chai');
-const { buildSearchParams } = require('../src/utils/buildSearchParams');
-const { isObject } = require('../src/utils/isObject');
-const { merge } = require('../src/utils/merge');
+import { assert } from 'chai';
+import { buildSearchParams } from '../src/utils/buildSearchParams';
+import { deepMerge } from '../src/utils/deepMerge';
+import { isObject } from '../src/utils/isObject';
 
 describe('Testing buildSearchParams util', () => {
 	it('should construct an instance of URLSearchParams', () => {
@@ -44,7 +44,7 @@ describe('Testing isObject util', () => {
 	});
 });
 
-describe('Testing merge util', () => {
+describe('Testing deepMerge util', () => {
 	it('should merge source into object', () => {
 		const object = {
 			text: 'original',
@@ -67,16 +67,16 @@ describe('Testing merge util', () => {
 			},
 		};
 		const expectedResult = {
-			id: 2,
-			text: 'original',
+			id: 3,
+			text: 'changed',
 			headers: {
 				Authorization: 'token',
-				'Content-Type': 'application/json',
+				'Content-Type': 'text/html',
 			},
 			type: 'text',
 		};
 
-		const mergeResult = merge(object, source1, source2);
+		const mergeResult = deepMerge(object, source1, source2);
 		assert.deepEqual(mergeResult, expectedResult);
 	});
 });

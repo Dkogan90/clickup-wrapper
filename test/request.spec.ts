@@ -1,10 +1,10 @@
-const { assert } = require('chai');
-const sinon = require('sinon');
-const { Clickup } = require('../src/index');
+import { assert } from 'chai';
+import { Clickup } from '../src';
+import sinon, { SinonStub } from 'sinon';
 
 describe('Testing the Request HTTP methods', () => {
-	let clickup;
-	let stub;
+	let clickup: Clickup;
+	let stub: SinonStub;
 	before(() => {
 		clickup = new Clickup('token');
 		stub = sinon.stub(clickup._service, '_instance').resolves();
@@ -93,7 +93,7 @@ describe('Testing the Request HTTP methods', () => {
 				team_id: 123,
 			},
 		});
-		const expectedParams = new URLSearchParams([['team_id', 123]]);
+		const expectedParams = new URLSearchParams([['team_id', (123).toString()]]);
 
 		const [getArgs, postArgs, putArgs, deleteArgs] = stub.args;
 
@@ -167,7 +167,7 @@ describe('Testing the Request HTTP methods', () => {
 });
 
 describe('Testing the Request helper methods', () => {
-	let clickup;
+	let clickup: Clickup;
 	before(() => {
 		clickup = new Clickup('token');
 	});
@@ -191,12 +191,5 @@ describe('Testing the Request helper methods', () => {
 		const authorizationHeader = clickup._service.getHeader('authorization');
 
 		assert.deepEqual(authorizationHeader, currentAuthorizationHeader);
-	});
-
-	it('should get current token', () => {
-		const currentToken = clickup._service._token;
-		const token = clickup._service.getToken();
-
-		assert.deepEqual(token, currentToken);
 	});
 });
