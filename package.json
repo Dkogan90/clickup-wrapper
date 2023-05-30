@@ -1,5 +1,5 @@
 {
-	"name": "@carlos0934/clickup",
+	"name": "@dkogan90/clickup-wrapper",
 	"version": "3.1.9",
 	"description": "A Node.js typescript wrapper for the Clickup API",
 	"main": "dist/index.js",
@@ -44,11 +44,11 @@
 	"author": "@ComfortablyCoding",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ComfortablyCoding/clickup.js.git"
+		"url": "https://github.com/Dkogan90/clickup-wrapper.git"
 	},
-	"homepage": "https://github.com/ComfortablyCoding/clickup.js#readme",
+	"homepage": "https://github.com/Dkogan90/clickup-wrapper#readme",
 	"bugs": {
-		"url": "https://github.com/ComfortablyCoding/clickup.js/issues"
+		"url": "https://github.com/Dkogan90/clickup-wrapper/issues"
 	},
 	"license": "MIT"
 }

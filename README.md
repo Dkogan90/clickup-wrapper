@@ -9,13 +9,13 @@ A Node.js wrapper for the [Clickup API](https://clickup.com/api).
 ## Install
 
 ```sh
-npm install clickup.js
+npm install clickup-wrapper
 ```
 
 or
 
 ```sh
-yarn add clickup.js
+yarn add clickup-wrapper
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ Before you can use this library you will need to first authenticate with the Cli
 In your project, initialize an instance of clickup.js:
 
 ```js
-const { Clickup } = require('clickup.js');
+const { Clickup } = require('clickup-wrapper');
 const token = '...'; // API access token
 const clickup = new Clickup(token);
 ```
@@ -115,4 +115,4 @@ The available features are:
 
 ## Disclaimer
 
-The [clickup.js](https://github.com/ComfortablyCoding/clickup.js) package is **unofficial** and therefor not endorsed or affiliated with ClickUp or it's subsidiaries.
+The [clickup-wrapper](https://github.com/Dkogan90/clickup-wrapper) package is **unofficial** and therefor not endorsed or affiliated with ClickUp or it's subsidiaries.
